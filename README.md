@@ -1,6 +1,8 @@
 # uda-ml-python3.6
 machine learn for python3.6
 
+image_similar 图片相似比对
+
 opencv_face opencv 人脸识别
 
 tensorflow_example tf官方例子
