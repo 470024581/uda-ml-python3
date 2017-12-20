@@ -19,3 +19,5 @@ tianchi_social_security 天池竞赛项目，不含数据
 
 
 融360反欺诈模型比赛  https://github.com/hczheng/Rong360.git
+
+商场中精确定位用户所在店铺大赛 http://mp.weixin.qq.com/s/62YxezfNSDdHzPjnzlwhwQ，开源地址 https://gitlab.tianchi.aliyun.com/drop-out/Wifi-Positioning?spm=5176.9876270.0.0.7a516c8bVjMKBZ
