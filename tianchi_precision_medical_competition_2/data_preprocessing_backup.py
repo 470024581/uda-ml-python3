@@ -16,13 +16,6 @@ import pandas as pd
 data_train = pd.read_csv('data/f_train_20180204.csv', encoding='gbk')
 data_test = pd.read_csv('data/f_test_a_20180204.csv', encoding='gbk')
 
-# data_train.info()
-# print(d_train.head(590))
-# print(d_train.describe())
-# print(d_train.shape)
-# print(d_train['性别'])
-# print(d_train['label'])
-
 # 数据预处理
 # 删除无用列
 def process_data(d_train, num):
