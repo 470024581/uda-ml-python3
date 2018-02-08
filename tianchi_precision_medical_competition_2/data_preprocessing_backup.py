@@ -159,8 +159,8 @@ def train_model(flag):
     else:
         pred_df=pd.DataFrame({"0":y_pred})
         pred_df.info()
-        pred_df.to_csv('data/result.txt', index=False, header=None, encoding='gbk')
+        pred_df.to_csv('data/result.csv', index=False, header=None, encoding='gbk')
     
-train_model(True)
-# train_model(False)
+# train_model(True)
+train_model(False)
 

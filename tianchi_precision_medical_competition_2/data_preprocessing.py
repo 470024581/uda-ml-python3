@@ -22,11 +22,11 @@ data_test = pd.read_csv('data/f_test_a_20180204.csv', encoding='gbk')
 def process_data(d_train, num):
     # 剔除无关特征
 #     d_train.drop(['id'],axis=1,inplace=True)
+    d_train.drop(['产次'],axis=1,inplace=True)
     d_train.drop(['RBP4'],axis=1,inplace=True)
     d_train.drop(['SNP10'],axis=1,inplace=True)
     d_train.drop(['SNP21'],axis=1,inplace=True)
     d_train.drop(['SNP3'],axis=1,inplace=True)
-    d_train.drop(['产次'],axis=1,inplace=True)
      
     d_train.drop(['SNP53'],axis=1,inplace=True)
     d_train.drop(['SNP5'],axis=1,inplace=True)
@@ -34,21 +34,41 @@ def process_data(d_train, num):
     d_train.drop(['SNP8'],axis=1,inplace=True)
     d_train.drop(['SNP9'],axis=1,inplace=True)
     d_train.drop(['SNP4'],axis=1,inplace=True)
-     
+      
     d_train.drop(['SNP25'],axis=1,inplace=True)
     d_train.drop(['SNP24'],axis=1,inplace=True)
     d_train.drop(['SNP16'],axis=1,inplace=True)
     d_train.drop(['SNP50'],axis=1,inplace=True)
     d_train.drop(['SNP33'],axis=1,inplace=True)
     d_train.drop(['SNP26'],axis=1,inplace=True)
+    d_train.drop(['BMI分类'],axis=1,inplace=True)
+    
+
+    d_train.drop(['SNP35'],axis=1,inplace=True)
+    d_train.drop(['SNP2'],axis=1,inplace=True)
+    d_train.drop(['SNP15'],axis=1,inplace=True)
+    d_train.drop(['SNP14'],axis=1,inplace=True)
+    d_train.drop(['分娩时'],axis=1,inplace=True)
+    
+    d_train.drop(['SNP12'],axis=1,inplace=True)
+    d_train.drop(['SNP45'],axis=1,inplace=True)
+    d_train.drop(['DM家族史'],axis=1,inplace=True)
+    d_train.drop(['SNP6'],axis=1,inplace=True)
+    d_train.drop(['SNP46'],axis=1,inplace=True)
+    d_train.drop(['SNP18'],axis=1,inplace=True)
+    
+    d_train.drop(['SNP22'],axis=1,inplace=True)
+    d_train.drop(['SNP23'],axis=1,inplace=True)
+    d_train.drop(['SNP55'],axis=1,inplace=True)
+    d_train.drop(['SNP43'],axis=1,inplace=True)
+    d_train.drop(['ACEID'],axis=1,inplace=True)
      
 #     d_train.drop(['BMI分类'],axis=1,inplace=True)
-#     d_train.drop(['SNP35'],axis=1,inplace=True)
-#     d_train.drop(['SNP2'],axis=1,inplace=True)
-#     d_train.drop(['SNP15'],axis=1,inplace=True)
+    d_train.drop(['SNP27'],axis=1,inplace=True)
+    d_train.drop(['SNP28'],axis=1,inplace=True)
+    d_train.drop(['SNP17'],axis=1,inplace=True)
 #     d_train.drop(['SNP14'],axis=1,inplace=True)
 #     d_train.drop(['分娩时'],axis=1,inplace=True)
-
 #     d_train.drop(['SNP12'],axis=1,inplace=True)
     
     # 缺失值补充中位数

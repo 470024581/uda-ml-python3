@@ -137,12 +137,18 @@ def process_data(d_train, num):
     d_train.drop(['SNP14'],axis=1,inplace=True)
     d_train.drop(['分娩时'],axis=1,inplace=True)
     
-#     d_train.drop(['SNP12'],axis=1,inplace=True)
-#     d_train.drop(['SNP45'],axis=1,inplace=True)
-#     d_train.drop(['DM家族史'],axis=1,inplace=True)
-#     d_train.drop(['SNP6'],axis=1,inplace=True)
-#     d_train.drop(['SNP46'],axis=1,inplace=True)
-#     d_train.drop(['SNP18'],axis=1,inplace=True)
+    d_train.drop(['SNP12'],axis=1,inplace=True)
+    d_train.drop(['SNP45'],axis=1,inplace=True)
+    d_train.drop(['DM家族史'],axis=1,inplace=True)
+    d_train.drop(['SNP6'],axis=1,inplace=True)
+    d_train.drop(['SNP46'],axis=1,inplace=True)
+    d_train.drop(['SNP18'],axis=1,inplace=True)
+    
+    d_train.drop(['SNP22'],axis=1,inplace=True)
+    d_train.drop(['SNP23'],axis=1,inplace=True)
+    d_train.drop(['SNP55'],axis=1,inplace=True)
+    d_train.drop(['SNP43'],axis=1,inplace=True)
+    d_train.drop(['ACEID'],axis=1,inplace=True)
     
     
 
@@ -193,10 +199,10 @@ from sklearn.ensemble import GradientBoostingClassifier
 
 param_grid = {
 #             "loss":['deviance'],
-            "learning_rate":[0.0005],
-            "n_estimators":[10000,12000,8000,14000],
+            "learning_rate":[0.01],
+            "n_estimators":[400,500,600],
 #             "max_features":['sqrt'], 
-            "max_depth":[3], 
+            "max_depth":[3,4,5], 
 #             "min_samples_split": [200], 
 #             "min_samples_leaf":[50], 
 #             "subsample":[0.8], 
