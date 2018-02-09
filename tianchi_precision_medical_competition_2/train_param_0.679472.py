@@ -197,9 +197,9 @@ from sklearn.ensemble import GradientBoostingClassifier
 param_grid = {
 #             "loss":['deviance'],
             "learning_rate":[0.01],
-            "n_estimators":[1000],
+            "n_estimators":[800],
 #             "max_features":['sqrt'], 
-            "max_depth":[5], 
+            "max_depth":[4], 
 #             "min_samples_split": [200], 
 #             "min_samples_leaf":[50], 
 #             "subsample":[0.8], 

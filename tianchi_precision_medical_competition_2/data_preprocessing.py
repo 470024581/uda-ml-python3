@@ -19,48 +19,36 @@ data_test = pd.read_csv('data/f_test_a_20180204.csv', encoding='gbk')
 
 # 数据预处理
 # 删除无用列
-def process_data(d_train, num):
+def process_data(d_train,d_test, test):
     # 剔除无关特征
 #     d_train.drop(['id'],axis=1,inplace=True)
-    d_train.drop(['RBP4'],axis=1,inplace=True)
-    d_train.drop(['SNP10'],axis=1,inplace=True)
-    d_train.drop(['SNP21'],axis=1,inplace=True)
-    d_train.drop(['SNP3'],axis=1,inplace=True)
-    d_train.drop(['产次'],axis=1,inplace=True)
-#       
-    
-#     d_train.drop(['SNP30'],axis=1,inplace=True)
-    d_train.drop(['SNP8'],axis=1,inplace=True)
-    d_train.drop(['SNP9'],axis=1,inplace=True)
-    d_train.drop(['SNP4'],axis=1,inplace=True)
+#     d_train.drop(['RBP4'],axis=1,inplace=True)
+#     d_train.drop(['SNP10'],axis=1,inplace=True)
+#     d_train.drop(['SNP21'],axis=1,inplace=True)
+#     d_train.drop(['SNP3'],axis=1,inplace=True)
+#     d_train.drop(['产次'],axis=1,inplace=True)
 #     
-    
-    d_train.drop(['SNP33'],axis=1,inplace=True)
-    d_train.drop(['SNP24'],axis=1,inplace=True)
-    d_train.drop(['SNP16'],axis=1,inplace=True)
-    d_train.drop(['SNP35'],axis=1,inplace=True)
-#      
-    d_train.drop(['SNP25'],axis=1,inplace=True)
-    d_train.drop(['SNP14'],axis=1,inplace=True)
-#     d_train.drop(['分娩时'],axis=1,inplace=True)
-#     d_train.drop(['SNP50'],axis=1,inplace=True)
-#     d_train.drop(['SNP26'],axis=1,inplace=True)
-#     d_train.drop(['SNP37'],axis=1,inplace=True)
-    
-    
-#     d_train.drop(['SNP15'],axis=1,inplace=True)
-    d_train.drop(['SNP2'],axis=1,inplace=True)
-#     d_train.drop(['SNP12'],axis=1,inplace=True)
-    d_train.drop(['DM家族史'],axis=1,inplace=True)
-    d_train.drop(['BMI分类'],axis=1,inplace=True)
-    d_train.drop(['SNP38'],axis=1,inplace=True)
-    
-    
-    d_train.drop(['SNP45'],axis=1,inplace=True)
-    d_train.drop(['SNP6'],axis=1,inplace=True)
-    d_train.drop(['SNP5'],axis=1,inplace=True)
-    d_train.drop(['SNP53'],axis=1,inplace=True)
-    d_train.drop(['SNP47'],axis=1,inplace=True)
+#     d_train.drop(['SNP8'],axis=1,inplace=True)
+#     d_train.drop(['SNP9'],axis=1,inplace=True)
+#     d_train.drop(['SNP4'],axis=1,inplace=True)
+#     
+#     d_train.drop(['SNP33'],axis=1,inplace=True)
+#     d_train.drop(['SNP24'],axis=1,inplace=True)
+#     d_train.drop(['SNP16'],axis=1,inplace=True)
+#     d_train.drop(['SNP35'],axis=1,inplace=True)
+# 
+#     d_train.drop(['SNP25'],axis=1,inplace=True)
+#     d_train.drop(['SNP14'],axis=1,inplace=True)
+#     d_train.drop(['SNP2'],axis=1,inplace=True)
+#     d_train.drop(['DM家族史'],axis=1,inplace=True)
+#     d_train.drop(['BMI分类'],axis=1,inplace=True)
+#     d_train.drop(['SNP38'],axis=1,inplace=True)
+#     
+#     d_train.drop(['SNP45'],axis=1,inplace=True)
+#     d_train.drop(['SNP6'],axis=1,inplace=True)
+#     d_train.drop(['SNP5'],axis=1,inplace=True)
+#     d_train.drop(['SNP53'],axis=1,inplace=True)
+#     d_train.drop(['SNP47'],axis=1,inplace=True)
     
     # 缺失值补充中位数
     d_train.fillna(d_train.median(axis=0),inplace=True)
@@ -68,38 +56,39 @@ def process_data(d_train, num):
     d_train.drop(['id'],axis=1,inplace=True)
     d_train.info()
 
-    if num==1:
-        train_y = d_train['label'].as_matrix()
-        d_train.drop(['label'],axis=1,inplace=True)
-        train_x = d_train.as_matrix()
-        return train_x, train_y
-    return d_train.as_matrix()
-
-
+    train_y = d_train['label'].as_matrix()
+    d_train.drop(['label'],axis=1,inplace=True)
+    from sklearn.feature_selection import SelectFromModel
+    from sklearn.ensemble import GradientBoostingClassifier
+    sfm = SelectFromModel(GradientBoostingClassifier(subsample=0.8, random_state=0), threshold=0.003)
+    sfm.fit(d_train, train_y)
+    train_x = sfm.transform(d_train)
+    if test==True:
+        train_x,test_x,train_y,test_y=train_test_split(train_x,train_y,test_size=0.1,random_state=0)
+        return train_x, test_x, train_y, test_y
+    else:
+        d_test.fillna(d_train.median(axis=0),inplace=True)
+        d_test.drop(['id'],axis=1,inplace=True)
+        test_x = sfm.transform(d_test)
+        return train_x ,test_x, train_y, None
+    
 
 from sklearn import grid_search
 from sklearn import metrics
 from sklearn.ensemble import GradientBoostingClassifier
+from sklearn.model_selection import train_test_split
 
-n_estimators = 900
-
-
+n_estimators = 800
 
 def train_model(flag):
-    train_x, train_y = process_data(data_train, 1)
-    if flag :
-        from sklearn.model_selection import train_test_split
-        train_x,test_x,train_y,test_y=train_test_split(train_x,train_y,test_size=0.1,random_state=4)
-    else:
-        test_x = process_data(data_test, 2)
-    
+    train_x, test_x, train_y, test_y = process_data(data_train, data_test, flag)
     
     # 参数优化顺序n_estimators、max_depth和min_samples_split、min_samples_split和min_samples_leaf、max_features、subsample、learning_rate和n_estimators
     gdbt=GradientBoostingClassifier(
                     loss='deviance', ##损失函数回归默认为ls（最小二乘法）、lad（绝对值差）、huber（二者结合）、quantile（分位数差），分类默认deviance  deviance具有概率输出的分类的偏差、exponential
                     learning_rate=0.01, # 默认0.1学习率
                     n_estimators=n_estimators, # 迭代训练次数，回归树个数（弱学习器）
-                    max_depth=5, # 默认值3最大树深度
+                    max_depth=4, # 默认值3最大树深度
                     subsample=0.8, # 子采样率，为1表示全部，推荐0.5-0.8默认1
                     criterion='friedman_mse', # 判断节点是否继续分裂采用的计算方法
                     min_samples_split=200, # 生成子节点所需要的最小样本数，浮点数代表%
@@ -115,7 +104,6 @@ def train_model(flag):
                     presort='auto')
     
     gdbt.fit(train_x,train_y)
-    
     y_pred = gdbt.predict(test_x)
     
     if flag :
@@ -156,10 +144,6 @@ def train_model(flag):
         pred_df.info()
         pred_df.to_csv('data/result.csv', index=False, header=None, encoding='gbk')
     
-# train_model(True, 11)
 # train_model(True)
-# train_model(True, 55)
-# train_model(True, 77)
-# train_model(True, 99)
 train_model(False)
 
